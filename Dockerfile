@@ -1,12 +1,12 @@
 # Build stage
-FROM maven:3.8.5-openjdk-11-slim AS build
+FROM maven:3.8.5-eclipse-temurin:11-jre-alpineAS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/sample-app-1.0.0.jar app.jar
 EXPOSE 8080
